@@ -46,6 +46,14 @@ body.landing {
   transition-delay: 0.2s;
 }
 
+.point:hover {
+  transition-property: font-size, color;
+  transition-delay: 0.5s;
+  transition-duration: 3s;
+  font-size: 35px;
+  color: green;
+}
+
 .point .point-title {
   font-size: 1.25rem;
 }
