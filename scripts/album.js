@@ -28,6 +28,21 @@ var albumMarconi = {
   ]
 };
 
+var albumYoshi = {
+  title: 'The Best',
+  artist: 'Yoshi Greer',
+  label: 'Greer Enterprises',
+  year: '1990',
+  albumArtUrl: 'assets/images/album_covers/09.png',
+  songs: [
+    { title: 'First Song?', duration: '10:00' },
+    { title: 'Second Song?', duration: '5:00' },
+    { title: 'Third Song?', duration: '4:00' },
+    { title: 'Fourth Song?', duration: '20:00' },
+    { title: 'The End', duration: '11:00' }
+  ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
     '<tr class="album-view-song-item">' +
@@ -58,6 +73,19 @@ var setCurrentAlbum = function(album) {
   }
 };
 
+/*var count = 0;
+var loadFunc = function () {
+  count += 1;
+  if (count % 3 == 1) {
+    setCurrentAlbum(albumPicasso);
+  } else if (count % 3 == 2) {
+    setCurrentAlbum(albumMarconi);
+  } else if (count % 3 == 0) {
+    setCurrentAlbum(albumYoshi);
+  }
+};*/
 window.onload = function() {
-  setCurrentAlbum(albumPicasso);
+  setCurrentAlbum(album);
 };
+
+document.getElementsByClassName('album-cover-art')[0].getEventListener('click', loadFunc);
