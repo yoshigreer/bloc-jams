@@ -35,7 +35,33 @@ var createSongRow = function(songNumber, songName, songLength) {
     '  <td class="song-item-title">' + songName + '</td>' +
     '  <td class="song-item-duration">' + songLength + '</td>' +
     '</tr>';
-  return $(template);
+  var $row = $(template);
+
+  var onHover = function(event) {
+    if ($(event.target).parent().is('.album-view-song-item')) {
+      $(event.target).parent().find('.song-item-number').html(playButtonTemplate);
+
+      var $songItem = $(.event.target).find('.song-item-number');
+      var $songItemNumber = $songItem.attr('.data-song-number');
+
+      if ($songItemNumber !== currentlyPlayingSong) {
+        $songItem.html(playButtonTemplate);
+      }
+    }
+  };
+
+  var offHover = function(event) {
+    var $songItem = $(.event.target).find();
+    var songItemNumber = songItem.getAttribute('data-song-number');
+
+    if (songItemNumber !== currentlyPlayingSong) {
+      songItem.innerHTML = songItemNumber;
+    }
+  };
+
+  $row.find('.song-item-number').click(clickHandler);
+  $row.hover(onHover, offHover);
+  return $row;
 };
 
 var setCurrentAlbum = function(album) {
@@ -129,11 +155,11 @@ window.onload = function() {
 
   for (var i = 0; i < songRows.length; i++) {
     songRows[i].addEventListener('mouseleave', function(event) {
-      //#1
+
       var songItem = getSongItem(event.target);
       var songItemNumber = songItem.getAttribute('data-song-number');
 
-      //#2
+
       if (songItemNumber !== currentlyPlayingSong) {
         songItem.innerHTML = songItemNumber;
       }
