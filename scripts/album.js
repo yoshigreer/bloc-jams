@@ -9,7 +9,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 
 
   var clickHandler = function() {
-    var $songNumber = $(this).attr('data-song-number');
+    var $songNumber = parseInt($(this).attr('data-song-number'));
 
     if (currentlyPlayingSongNumber === null) {
       $(this).html(pauseButtonTemplate);
@@ -33,7 +33,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 
   var onHover = function(event) {
     var songNumberCell = $(this).find('.song-item-number');
-    var songNumber = songNumberCell.attr('data-song-number');
+    var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
     if (songNumber !== currentlyPlayingSongNumber) {
       songNumberCell.html(playButtonTemplate);
@@ -42,7 +42,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 
   var offHover = function(event) {
     var songNumberCell = $(this).find('.song-item-number');
-    var songNumber = songNumberCell.attr('data-song-number');
+    var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
     if (songNumber !== currentlyPlayingSongNumber) {
       songNumberCell.html(songNumber);
