@@ -141,7 +141,7 @@ var previousSong = function() {
 
   //Set new current song
   currentlyPlayingSongNumber = currentSongIndex + 1;
-  currentSongFromAlbum  = currentAlbum.songs[currentSongIdex];
+  currentSongFromAlbum  = currentAlbum.songs[currentSongIndex];
 
   //update player bar info
   $('.currently-playing .song-name').text(currentSongFromAlbum.title);
@@ -153,7 +153,7 @@ var previousSong = function() {
   var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
   var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
 
-  $previousSongNumberCell.html(pauseButtonTemplate);
+  $nextSongNumberCell.html(pauseButtonTemplate);
   $lastSongNumberCell.html(lastSongNumber);
 };
 
