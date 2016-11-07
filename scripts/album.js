@@ -1,4 +1,8 @@
 var setSong = function(songNumber) {
+  if (currentSoundFile) {
+    currentSoundFile.stop();
+  }
+
   currentSongFromAlbum = currentAlbum.songs[songNumber-1];
   currentlyPlayingSongNumber = parseInt(songNumber);
 
@@ -6,6 +10,14 @@ var setSong = function(songNumber) {
     formats: [ 'mp3' ],
     preload: true
   });
+
+  setVolume(currentVolume);
+};
+
+var setVolume = function(volume) {
+  if (currendSoundFile) {
+    currrentSoundFile.setVolume(volume);
+  }
 };
 
 var getSongNumberCell = function(number) {
@@ -30,31 +42,26 @@ var createSongRow = function(songNumber, songName, songLength) {
       setSong(songNumber);
       updatePlayerBarSong();
       currentSoundFile.play();
-    } else
-    //if the clicked song is the currently playing song
-    if (currentlyPlayingSongNumber === songNumber) {
-
-      //if song is already paused
+    } else if (currentlyPlayingSongNumber === songNumber) {
+      //if the clicked song is the currently playing song
       if (currentSoundFile.isPaused()) {
+        //if song is already paused
         currentSoundFile.play();
         $(this).html(pauseButtonTemplate);
         $('.main-controls .play-pause').html(playerBarPauseButton);
-      }
-      //if song is playing
-      else {
+      } else {
+        //if song is playing
         $(this).html(playButtonTemplate);
         $('.main-controls .play-pause').html(playerBarPlayButton);
         currentSoundFile.pause();
       }
-    } else
-    //if new song is clicked
-    if (currentlyPlayingSongNumber !== songNumber) {
+    } else if (currentlyPlayingSongNumber !== songNumber) {
+      //if new song is clicked
       var $currentlyPlayingSongCell = getSongNumberCell(currentlyPlayingSongNumber);
       $currentlyPlayingSongCell.html(currentlyPlayingSongNumber);
       $(this).html(pauseButtonTemplate);
       setSong(songNumber);
       updatePlayerBarSong();
-      //play new currentSoundFile
       currentSoundFile.play();
     }
   };
@@ -136,12 +143,13 @@ var nextSong = function() {
 
   //Set new current song
   setSong(currentSongIndex + 1);
+  currentSoundFile.play();
 
-  //update player bar info
-  $('.currently-playing .song-name').text(currentSongFromAlbum.title);
-  $('.currently-playing .artist-name').text(currentAlbum.artist);
-  $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
-  $('.main-controls .play-pause').html(playerBarPauseButton);
+  updatePlayerBarSong();
+  //$('.currently-playing .song-name').text(currentSongFromAlbum.title);
+  //$('.currently-playing .artist-name').text(currentAlbum.artist);
+  //$('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
+  //$('.main-controls .play-pause').html(playerBarPauseButton);
 
   var lastSongNumber = getLastSongNumber(currentSongIndex);
   var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
@@ -167,12 +175,13 @@ var previousSong = function() {
 
   //Set new current song
   setSong(currentSongIndex + 1);
+  currentSoundFile.play();
 
-  //update player bar info
-  $('.currently-playing .song-name').text(currentSongFromAlbum.title);
-  $('.currently-playing .artist-name').text(currentAlbum.artist);
-  $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
-  $('.main-controls .play-pause').html(playerBarPauseButton);
+  updatePlayerBarSong();
+  //$('.currently-playing .song-name').text(currentSongFromAlbum.title);
+  //$('.currently-playing .artist-name').text(currentAlbum.artist);
+  //$('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
+  //$('.main-controls .play-pause').html(playerBarPauseButton);
 
   var lastSongNumber = getLastSongNumber(currentSongIndex);
   var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
@@ -191,6 +200,7 @@ var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
+var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
