@@ -25,6 +25,26 @@ var setVolume = function(volume) {
   }
 };
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+  $('.current-time').text(currentTime);
+};
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+  $('.total-time').text(totalTime);
+};
+
+var filterTimeCode = function(timeInSeconds) {
+  var secondsTime = parseFloat(timeInSeconds);
+
+  var wholeSeconds = Math.floor(secondsTime % 60);
+  var wholeMinutes = Math.floor(secondsTime / 60);
+  if (wholeSeconds < 10) {
+    wholeSeconds = "0" + wholeSeconds;
+  }
+
+  return wholeMinutes + ":" + wholeSeconds;
+};
+
 var getSongNumberCell = function(number) {
   return $('.song-item-number[data-song-number ="' + number + '"]');
 };
@@ -34,7 +54,7 @@ var createSongRow = function(songNumber, songName, songLength) {
     '<tr class="album-view-song-item">' +
     '  <td class="song-item-number" data-song-number ="' + songNumber + '">' + songNumber + '</td>' +
     '  <td class="song-item-title">' + songName + '</td>' +
-    '  <td class="song-item-duration">' + songLength + '</td>' +
+    '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>' +
     '</tr>';
   var $row = $(template);
 
@@ -131,6 +151,9 @@ var updateSeekBarWhileSongPlays = function() {
       var $seekBar = $('.seek-control .seek-bar');
 
       updateSeekPercentage($seekBar, seekBarFillRatio);
+
+      setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
+      setTotalTimeInPlayerBar(filterTimeCode(this.getDuration()));
     });
   }
 };
